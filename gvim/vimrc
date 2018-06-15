@@ -1,0 +1,285 @@
+" Basics
+set encoding=utf-8
+set relativenumber
+set clipboard=unnamed
+set expandtab tabstop=4 shiftwidth=4
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set cursorline
+
+" No swap files needed
+set nobackup       "no backup files
+set nowritebackup  "only in case you don't want a backup file while editing
+set noswapfile     "no swap files
+
+" No wrapping
+set nowrap
+set linespace=5
+
+" Set the Leader
+let mapleader = ","
+
+colorscheme PaperColor
+
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/vimfiles/plugged')
+
+" BASIC PLUGINS GLOBALLY USEFUL
+" Make sure you use single quotes
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+
+" Indentation Guides
+Plug 'yggdroot/indentline'
+
+" Airline
+Plug 'bling/vim-airline'
+
+" Highlight the Yanks
+Plug 'machakann/vim-highlightedyank'
+
+" Autoformat
+Plug 'Chiel92/vim-autoformat'
+
+" Completion
+Plug 'valloric/youcompleteme'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+" Fuzzy File Navigation
+Plug 'kien/ctrlp.vim'
+
+" Git Stuff
+Plug 'tpope/vim-fugitive'
+
+" Git status in the Gutter
+Plug 'airblade/vim-gitgutter'
+
+" Surround
+Plug 'tpope/vim-surround'
+
+" Commenting Helper
+Plug 'scrooloose/nerdcommenter'
+
+" Tab Completion for Snippets & Completion
+Plug 'ervandew/supertab'
+
+" Syntastic
+Plug 'scrooloose/syntastic'
+" Snippets
+" Track the engine.
+Plug 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
+" Tab Management
+Plug 'kien/tabman.vim'
+
+" LANGUAGE HELPER VIM PLUGINS
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Typescript
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi', { 'do': 'npm install -g typescript' }
+
+" Scss
+Plug 'cakebaker/scss-syntax.vim'
+
+" SALT
+Plug 'saltstack/salt-vim'
+
+Plug 'prettier/vim-prettier', {
+            \ 'do': 'npm install',
+            \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
+
+" C# Omnisharp
+Plug 'OmniSharp/omnisharp-vim'
+
+" Html Math Tags
+Plug 'valloric/matchtagalways'
+
+" Initialize plugin system
+call plug#end()
+
+" Global Plugin Config
+noremap <leader>f :Autoformat<CR>
+noremap <leader>nf :NERDTreeFind<CR>
+noremap <leader>nt :NERDTreeToggle<CR>
+noremap <leader>t :CtrlP<CR>
+noremap <leader>b :CtrlPBuffer<CR>
+nnoremap <C-tab>   :tabnext<CR>
+nnoremap <C-S-tab> :tabprevious<CR>
+nnoremap <C-t> :tabnew<CR>
+nnoremap <C-c> :tabclose<CR>
+
+" NERD Tree Settings
+let NERDTreeShowHidden=1
+
+" Completion Settings
+" make YCM compatible with UltiSnips (using supertab)
+let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:SuperTabCrMapping = 0
+let g:UltiSnipsExpandTrigger           = '<tab>'
+let g:UltiSnipsJumpForwardTrigger      = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
+let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+
+" better key bindings for UltiSnipsExpandTrigger
+" Snippets Directory
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+
+" Snippets Config
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+" Typescript stuff
+augroup typscript
+    let g:tsuquyomi_single_quote_import=1
+    autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
+    autocmd FileType typescript nmap <buffer> <Leader>i <Plug>(TsuquyomiImport)
+    autocmd FileType typescript nmap <buffer> gd <Plug>(TsuquyomiDefinition)
+augroup END
+
+" Ctrlp ignore
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
+" GUI stuff
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ 12
+    elseif has("gui_macvim")
+        set guifont=Menlo\ Regular:h14
+    elseif has("gui_win32")
+        ":set guifont=Consolas:h10.1:cANSI
+        :set guifont=Source\ Code\ Variable\ Regular:h9:cDEFAULT:qCLEARTYPE
+        :set guioptions-=m  "remove menu bar
+        :set guioptions-=T  "remove toolbar
+        :set guioptions-=r  "remove right-hand scroll bar
+        :set guioptions-=R  "remove right-hand scroll bar
+        :set guioptions-=l  "remove left-hand scroll bar
+        :set guioptions-=L  "remove left-hand scroll bar
+        :set guioptions-=b  "remove bottom scroll bar
+        :set guioptions-=e  "don't use gui tabs
+        :set guioptions-=F  "don't use a footer
+        " Gvim Fullscreen
+        map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+    endif
+endif
+
+" Indent Guide Configuration
+let g:indentLine_leadingSpaceEnabled = 1
+let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_char = '·'
+
+" Prettier settings
+let g:prettier#config#bracket_spacing = 'true'
+
+" Omnisharp Configuration
+"
+" OmniSharp won't work without this setting
+filetype plugin on
+
+let g:OmniSharp_server_path = 'C:\OmniSharp\omnisharp.http-win-x64\OmniSharp.exe'
+" don't start yourself
+let g:Omnisharp_start_server = 1
+" User ctrl+p for completion
+let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
+set completeopt=longest,menuone,preview
+" Set the path to the roslyn server
+
+" Set the type lookup function to use the preview window instead of echoing it
+"let g:OmniSharp_typeLookupInPreview = 1
+
+" Timeout in seconds to wait for a response from the server
+
+" Don't autoselect first omnicomplete option, show options even if there is only
+" one (so the preview documentation is accessible). Remove 'preview' if you
+" don't want to see any documentation whatsoever.
+set completeopt=longest,menuone,preview
+
+" Fetch full documentation during omnicomplete requests.
+" There is a performance penalty with this (especially on Mono).
+" By default, only Type/Method signatures are fetched. Full documentation can
+" still be fetched when you need it with the :OmniSharpDocumentation command.
+"let g:omnicomplete_fetch_full_documentation = 1
+
+" Set desired preview window height for viewing documentation.
+" You might also want to look at the echodoc plugin.
+set previewheight=5
+
+" Get code issues and syntax errors
+let g:syntastic_cs_checkers = ['code_checker']
+
+augroup omnisharp_commands
+    autocmd!
+
+    " Synchronous build (blocks Vim)
+    "autocmd FileType cs nnoremap <buffer> <F5> :wa!<CR>:OmniSharpBuild<CR>
+    " Builds can also run asynchronously with vim-dispatch installed
+    autocmd FileType cs nnoremap <buffer> <Leader>ob :wa!<CR>:OmniSharpBuildAsync<CR>
+    " Automatic syntax check on events (TextChanged requires Vim 7.4)
+    autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+
+    " Automatically add new cs files to the nearest project on save
+    autocmd BufWritePost *.cs call OmniSharp#AddToProject()
+
+    " Show type information automatically when the cursor stops moving
+    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+
+    " The following commands are contextual, based on the cursor position.
+    autocmd FileType cs nnoremap <buffer> gd :OmniSharpGotoDefinition<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fi :OmniSharpFindImplementations<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fs :OmniSharpFindSymbol<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fu :OmniSharpFindUsages<CR>
+
+    " Finds members in the current buffer
+    autocmd FileType cs nnoremap <buffer> <Leader>fm :OmniSharpFindMembers<CR>
+
+    " Cursor can be anywhere on the line containing an issue
+    autocmd FileType cs nnoremap <buffer> <Leader>x  :OmniSharpFixIssue<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fx :OmniSharpFixUsings<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>tt :OmniSharpTypeLookup<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>dc :OmniSharpDocumentation<CR>
+
+    " Navigate up and down by method/property/field
+    autocmd FileType cs nnoremap <buffer> <C-k> :OmniSharpNavigateUp<CR>
+    autocmd FileType cs nnoremap <buffer> <C-j> :OmniSharpNavigateDown<CR>
+augroup END
+
+" Contextual code actions (uses fzf, CtrlP or unite.vim when available)
+nnoremap <Leader><Space> :OmniSharpGetCodeActions<CR>
+" Run code actions with text selected in visual mode to extract method
+xnoremap <Leader><Space> :call OmniSharp#GetCodeActions('visual')<CR>
+
+" Rename with dialog
+nnoremap <Leader>nm :OmniSharpRename<CR>
+nnoremap <F2> :OmniSharpRename<CR>
+" Rename without dialog - with cursor on the symbol to rename: `:Rename newname`
+command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
+
+" Force OmniSharp to reload the solution. Useful when switching branches etc.
+nnoremap <Leader>rl :OmniSharpReloadSolution<CR>
+nnoremap <Leader>cf :OmniSharpCodeFormat<CR>
+" Load the current .cs file to the nearest project
+nnoremap <Leader>tp :OmniSharpAddToProject<CR>
+
+" Start the omnisharp server for the current solution
+nnoremap <Leader>ss :OmniSharpStartServer<CR>
+nnoremap <Leader>sp :OmniSharpStopServer<CR>
+
+" Add syntax highlighting for types and interfaces
+nnoremap <Leader>th :OmniSharpHighlightTypes<CR>
+
+" Enable snippet completion
+" let g:OmniSharp_want_snippet=1
