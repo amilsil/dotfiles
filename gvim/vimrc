@@ -16,12 +16,31 @@ set noswapfile     "no swap files
 
 " No wrapping
 set nowrap
-set linespace=5
+
+" Keep cursor from going to topmost/bottommost
+set scrolloff=10
+" Window switching
+nmap <silent> <C-k> :wincmd k<CR>
+nmap <silent> <C-j> :wincmd j<CR>
+nmap <silent> <C-h> :wincmd h<CR>
+nmap <silent> <C-l> :wincmd l<CR>
 
 " Set the Leader
 let mapleader = ","
 
 colorscheme PaperColor
+let g:PaperColor_Theme_Options = {
+            \   'theme': {
+            \     'default.dark': {
+            \       'override' : {
+            \         'color00' : ['#080808', '232'],
+            \         'linenumber_bg' : ['#080808', '232'],
+            \         'cursorline' : ['#181818', '232'],
+            \         'cursorcolumn' : ['#381818', '232']
+            \       }
+            \     }
+            \   }
+            \ }
 
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
@@ -29,18 +48,38 @@ colorscheme PaperColor
 call plug#begin('~/vimfiles/plugged')
 
 " BASIC PLUGINS GLOBALLY USEFUL
+" Tpops basic sensible vim setting
+Plug 'tpope/vim-sensible'
+
 " Make sure you use single quotes
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
+" Highlight and clear trailing white spaces
+Plug 'bronson/vim-trailing-whitespace'
+
 " Indentation Guides
 Plug 'yggdroot/indentline'
+
+" Multiple cursor support for editing multiple things at once
+Plug 'terryma/vim-multiple-cursors'
+
+" Zoom fonts
+Plug 'vim-scripts/zoom.vim'
 
 " Airline
 Plug 'bling/vim-airline'
 
 " Highlight the Yanks
 Plug 'machakann/vim-highlightedyank'
+
+" Fuzzy file finder
+Plug 'mileszs/ack.vim'
+
+" Dispatch asynchronous commands
+Plug 'tpope/vim-dispatch'
+" async run mostly equal to dispatch, just trying
+Plug 'skywind3000/asyncrun.vim'
 
 " Autoformat
 Plug 'Chiel92/vim-autoformat'
@@ -56,6 +95,13 @@ Plug 'kien/ctrlp.vim'
 
 " Git Stuff
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
+
+" Unimpaired
+Plug 'tpope/vim-unimpaired'
+
+"Exchange text between two places
+Plug 'tommcdo/vim-exchange'
 
 " Git status in the Gutter
 Plug 'airblade/vim-gitgutter'
@@ -69,8 +115,9 @@ Plug 'scrooloose/nerdcommenter'
 " Tab Completion for Snippets & Completion
 Plug 'ervandew/supertab'
 
-" Syntastic
+" Syntastic: Syntax checkers
 Plug 'scrooloose/syntastic'
+
 " Snippets
 " Track the engine.
 Plug 'SirVer/ultisnips'
@@ -102,9 +149,40 @@ Plug 'prettier/vim-prettier', {
 " C# Omnisharp
 Plug 'OmniSharp/omnisharp-vim'
 
+" Test runner for vim
+Plug 'janko-m/vim-test'
+
+" Try to run vim-test tests on tmux
+Plug 'benmills/vimux'
+
 " Html Math Tags
 Plug 'valloric/matchtagalways'
 
+" Edit vim json support
+" Otherwise with indentLine working, quotes disappear in json files
+Plug 'elzr/vim-json'
+
+" Docker file syntax
+Plug 'ekalinin/Dockerfile.vim'
+
+" Toml
+Plug 'cespare/vim-toml'
+
+" php
+Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+
+" Python
+Plug 'zchee/deoplete-jedi'
+" My work
+"Plug 'amilsil/vim-dotnet'
+Plug 'pprovost/vim-ps1'
+
+" Interacting with databases
+Plug 'tpope/vim-dadbod'
+" Insert uuids
+Plug 'kburdett/vim-nuuid'
 " Initialize plugin system
 call plug#end()
 
@@ -112,15 +190,48 @@ call plug#end()
 noremap <leader>f :Autoformat<CR>
 noremap <leader>nf :NERDTreeFind<CR>
 noremap <leader>nt :NERDTreeToggle<CR>
-noremap <leader>t :CtrlP<CR>
+noremap <leader>l :CtrlP<CR>
 noremap <leader>b :CtrlPBuffer<CR>
 nnoremap <C-tab>   :tabnext<CR>
 nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-c> :tabclose<CR>
+tnoremap <C-tab>  <C-\><C-N>:tabnext<CR>
+tnoremap <C-S-tab> <C-\><C-N>:tabprevious<CR>
+tnoremap <C-t> <C-\><C-N>:tabnew<CR>
+
+" airline configuration
+"let g:airline_left_sep = ''
+"let g:airline_left_alt_sep = ''
+"let g:airline_right_sep = ''
+"let g:airline_right_alt_sep = ''
+"let g:airline_symbols = {}
+"let g:airline_symbols.branch = ''
+"let g:airline_symbols.readonly = ''
+"let g:airline_symbols.linenr = '☰'
+"let g:airline_symbols.maxlinenr = ''
+
+" Vim Test configuration
+" these "Test mappings" work well when Caps Lock is mapped to Ctrl
+" make test commands execute using dispatch.vim
+"let test#strategy = "dispatch"
+"let test#strategy = 'vimterminal'
+"let test#filename_modifier = ':p' " /User/janko/Code/my_project/test/models/user_test.rb
+let test#csharp#runner = 'DotnetTest'
+
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tv :TestVisit<CR>
+let test#filename_modifier = ':~'
+let g:test#preserve_screen = 1
 
 " NERD Tree Settings
 let NERDTreeShowHidden=1
+let g:NERDTreeWinSize = 40
+" Ignore C# build folders
+let NERDTreeIgnore=['bin$[[dir]]', 'obj$[[dir]]', '\.vs$[[dir]]', '\~$']
 
 " Completion Settings
 " make YCM compatible with UltiSnips (using supertab)
@@ -149,10 +260,11 @@ augroup typscript
     autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
     autocmd FileType typescript nmap <buffer> <Leader>i <Plug>(TsuquyomiImport)
     autocmd FileType typescript nmap <buffer> gd <Plug>(TsuquyomiDefinition)
+    autocmd FileType typescript nmap <buffer> <leader>fu <Plug>(TsuquyomiReferences)
 augroup END
 
 " Ctrlp ignore
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|bin\|lib\'
 
 " GUI stuff
 if has("gui_running")
@@ -161,8 +273,15 @@ if has("gui_running")
     elseif has("gui_macvim")
         set guifont=Menlo\ Regular:h14
     elseif has("gui_win32")
+        set linespace=5
+        " initial launch size
+        :set lines=50 columns=120
         ":set guifont=Consolas:h10.1:cANSI
-        :set guifont=Source\ Code\ Variable\ Regular:h9:cDEFAULT:qCLEARTYPE
+        " PRESENTING
+        "set linespace=5
+        ":set guifont=Source\ Code\ Variable\
+        "Regular:h12:cDEFAULT:qCLEARTYPE
+        :set guifont=Source\ Code\ Pro:h9:cDEFAULT:qCLEARTYPE
         :set guioptions-=m  "remove menu bar
         :set guioptions-=T  "remove toolbar
         :set guioptions-=r  "remove right-hand scroll bar
@@ -182,6 +301,9 @@ let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 let g:indentLine_char = '·'
 
+" vim json config
+let g:vim_json_syntax_conceal = 0
+
 " Prettier settings
 let g:prettier#config#bracket_spacing = 'true'
 
@@ -193,6 +315,9 @@ filetype plugin on
 let g:OmniSharp_server_path = 'C:\OmniSharp\omnisharp.http-win-x64\OmniSharp.exe'
 " don't start yourself
 let g:Omnisharp_start_server = 1
+"let g:Omnisharp_port = 2000
+let g:OmniSharp_timeout = 5
+let g:OmniSharp_use_random_port = 1
 " User ctrl+p for completion
 let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
 set completeopt=longest,menuone,preview
@@ -206,20 +331,24 @@ set completeopt=longest,menuone,preview
 " Don't autoselect first omnicomplete option, show options even if there is only
 " one (so the preview documentation is accessible). Remove 'preview' if you
 " don't want to see any documentation whatsoever.
-set completeopt=longest,menuone,preview
+"set completeopt=longest,menuone,preview
 
 " Fetch full documentation during omnicomplete requests.
 " There is a performance penalty with this (especially on Mono).
 " By default, only Type/Method signatures are fetched. Full documentation can
 " still be fetched when you need it with the :OmniSharpDocumentation command.
 "let g:omnicomplete_fetch_full_documentation = 1
-
+" Use a random port to service different code repos
 " Set desired preview window height for viewing documentation.
 " You might also want to look at the echodoc plugin.
 set previewheight=5
 
 " Get code issues and syntax errors
 let g:syntastic_cs_checkers = ['code_checker']
+let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint']
+" Syntastic puts errors in locations list, which enable lnext, lprev
+" navigation
+let g:syntastic_always_populate_loc_list = 1
 
 augroup omnisharp_commands
     autocmd!
@@ -230,9 +359,6 @@ augroup omnisharp_commands
     autocmd FileType cs nnoremap <buffer> <Leader>ob :wa!<CR>:OmniSharpBuildAsync<CR>
     " Automatic syntax check on events (TextChanged requires Vim 7.4)
     autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
-
-    " Automatically add new cs files to the nearest project on save
-    autocmd BufWritePost *.cs call OmniSharp#AddToProject()
 
     " Show type information automatically when the cursor stops moving
     autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
@@ -283,3 +409,23 @@ nnoremap <Leader>th :OmniSharpHighlightTypes<CR>
 
 " Enable snippet completion
 " let g:OmniSharp_want_snippet=1
+
+" Golang
+autocmd FileType go nmap <leader>m <Plug>(go-build)
+autocmd FileType go nmap <leader>r <Plug>(go-run)
+autocmd FileType go nmap <leader>t <Plug>(go-test)
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <Leader>a <Plug>(go-alternate)
+
+"Ack Settings
+noremap <Leader>s :Ack <cword><cr>
+
+"Terminal
+nnoremap <leader>tm :terminal bash<CR>
+
+" Different background color for 80 charactors onwards
+let &colorcolumn=join(range(121,121),".")
+"let &colorcolumn="80,".join(range(120,999),",")
+
+" Prettier Settings
+let g:prettier#config#tab_width = 2
