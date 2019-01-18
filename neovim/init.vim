@@ -40,12 +40,16 @@ colorscheme PaperColor
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
+" Try to run vim-test tests on tmux
+Plug 'benmills/vimux'
+
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
 Plug 'vim-airline/vim-airline'
 
 Plug 'ctrlpvim/ctrlp.vim'
+    let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|bin\|lib\'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
@@ -62,6 +66,9 @@ Plug 'scrooloose/nerdtree'
 
 " Syntastic
 Plug 'scrooloose/syntastic'
+    let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint']
+    let g:syntastic_always_populate_loc_list = 1
+
 
 " Git Fugitive
 Plug 'tpope/vim-fugitive'
@@ -69,6 +76,10 @@ Plug 'tpope/vim-fugitive'
 
 " Git status in the Gutter
 Plug 'airblade/vim-gitgutter'
+
+Plug 'prettier/vim-prettier', {
+            \ 'do': 'npm install',
+            \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
 
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 Plug 'fatih/vim-go', { 'tag': '*' }
@@ -85,6 +96,9 @@ Plug 'Quramy/tsuquyomi', { 'do': 'npm install -g typescript' }
       autocmd FileType typescript nmap <buffer> <Leader>i <Plug>(TsuquyomiImport)
       autocmd FileType typescript nmap <buffer> <Leader>d <Plug>(TsuDefinition)
     augroup END
+
+" Html Math Tags
+Plug 'valloric/matchtagalways'
 
 " Initialize plugin system
 call plug#end()
