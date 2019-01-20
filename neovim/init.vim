@@ -43,6 +43,10 @@ call plug#begin('~/.vim/plugged')
 " Try to run vim-test tests on tmux
 Plug 'benmills/vimux'
 
+Plug 'christoomey/vim-tmux-navigator'
+
+Plug 'mileszs/ack.vim'
+
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
