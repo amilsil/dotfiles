@@ -146,6 +146,10 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 " ctrlp filters lists
 Plug 'ctrlpvim/ctrlp.vim'
+    noremap <leader>l :CtrlP<CR>
+    noremap <leader>b :CtrlPBuffer<CR>
+    let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|bin\|lib\'
+
 " Templates
 Plug 'mhartington/oceanic-next'
 Plug 'altercation/vim-colors-solarized'
