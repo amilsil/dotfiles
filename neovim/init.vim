@@ -9,6 +9,7 @@ set hlsearch
 set cursorline
 set expandtab 
 set tabstop=4 shiftwidth=4
+set mouse=a "enable mouse on all modes
 
 " Set the Leader
 let mapleader = ","
