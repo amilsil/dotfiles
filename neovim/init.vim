@@ -10,6 +10,7 @@ set cursorline
 set expandtab 
 set tabstop=4 shiftwidth=4
 set mouse=a "enable mouse on all modes
+set nowrap
 
 " Set the Leader
 let mapleader = ","
@@ -43,6 +44,10 @@ call plug#begin('~/.vim/plugged')
 
 " Try to run vim-test tests on tmux
 Plug 'benmills/vimux'
+    map <Leader>vi :VimuxInspectRunner<CR>
+    map <Leader>vl :VimuxRunLastCommand<CR>
+    map <Leader>vp :VimuxPromptCommand<CR>
+    map <Leader>vq :VimuxCloseRunner<CR>
 
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -139,6 +144,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
     autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 Plug 'Quramy/tsuquyomi', { 'do': 'npm install -g typescript' }
+Plug 'Shougo/vimproc'
     augroup typescript
       let g:tsuquyomi_single_quote_import=1
       autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
