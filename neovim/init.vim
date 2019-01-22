@@ -56,6 +56,8 @@ Plug 'mileszs/ack.vim'
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
+Plug 'tpope/vim-surround'
+
 Plug 'vim-airline/vim-airline'
 
 Plug 'ctrlpvim/ctrlp.vim'
@@ -143,13 +145,14 @@ Plug 'mxw/vim-jsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
     autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
-Plug 'Quramy/tsuquyomi', { 'do': 'npm install -g typescript' }
-Plug 'Shougo/vimproc'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
     augroup typescript
-      let g:tsuquyomi_single_quote_import=1
-      autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
-      autocmd FileType typescript nmap <buffer> <Leader>i <Plug>(TsuquyomiImport)
-      autocmd FileType typescript nmap <buffer> <Leader>d <Plug>(TsuDefinition)
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>e :TSRename<CR>
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>i :TSImport<CR>
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fd :TSDef<CR>
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fc :TSDoc<CR>
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>d :TSType<CR>
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fi :TSRefs<CR>
     augroup END
 
 " Html Math Tags
