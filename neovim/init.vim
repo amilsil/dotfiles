@@ -67,6 +67,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
+" Remember multiple yanks
+Plug 'vim-scripts/YankRing.vim'
+    nnoremap <silent> <leader>ys :YRShow<CR>
+
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
     let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
@@ -152,7 +156,8 @@ Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fd :TSDef<CR>
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fc :TSDoc<CR>
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>d :TSType<CR>
-      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fi :TSRefs<CR>
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fu :TSRefs<CR>
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fs :TSGetDocSymbols<CR>
     augroup END
 
 " Html Math Tags
