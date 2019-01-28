@@ -51,7 +51,11 @@ Plug 'benmills/vimux'
 
 Plug 'christoomey/vim-tmux-navigator'
 
+" Search within files
 Plug 'mileszs/ack.vim'
+
+" Distraction Free Writing
+Plug 'junegunn/goyo.vim'
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
