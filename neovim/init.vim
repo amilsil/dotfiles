@@ -56,6 +56,8 @@ Plug 'mileszs/ack.vim'
 
 " Distraction Free Writing
 Plug 'junegunn/goyo.vim'
+    let g:goyo_width = 120 
+    noremap <leader>rd :Goyo<CR>
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
