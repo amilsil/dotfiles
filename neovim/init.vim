@@ -7,10 +7,13 @@ set smartcase
 set incsearch
 set hlsearch
 set cursorline
-set expandtab 
+set expandtab
 set tabstop=4 shiftwidth=4
 set mouse=a "enable mouse on all modes
 set nowrap
+
+" Remove vertical splitbar
+:set fillchars+=vert:\ 
 
 " Set the Leader
 let mapleader = ","
@@ -56,19 +59,21 @@ Plug 'mileszs/ack.vim'
 
 " Distraction Free Writing
 Plug 'junegunn/goyo.vim'
-    let g:goyo_width = 120 
+    let g:goyo_width = 120
     noremap <leader>rd :Goyo<CR>
 
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
 Plug 'tpope/vim-surround'
 
+Plug 'vim-airline/vim-airline-themes'
+    let g:airline_solarized_bg='luna'
 Plug 'vim-airline/vim-airline'
 
 Plug 'ctrlpvim/ctrlp.vim'
     noremap <leader>l :CtrlP<CR>
     noremap <leader>b :CtrlPBuffer<CR>
+    noremap <leader>f :CtrlPCurFile<CR>
     let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|bin\|lib\'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -81,24 +86,24 @@ Plug 'vim-scripts/YankRing.vim'
 Plug 'majutsushi/tagbar'
     " Have to brew install ctags-exuberant
     let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
-    let g:tagbar_type_typescript = {                                                  
-      \ 'ctagsbin' : 'tstags',                                                        
-      \ 'ctagsargs' : '-f-',                                                           
-      \ 'kinds': [                                                                     
-        \ 'e:enums:0:1',                                                               
-        \ 'f:function:0:1',                                                            
-        \ 't:typealias:0:1',                                                           
-        \ 'M:Module:0:1',                                                              
-        \ 'I:import:0:1',                                                              
-        \ 'i:interface:0:1',                                                           
-        \ 'C:class:0:1',                                                               
-        \ 'm:method:0:1',                                                              
-        \ 'p:property:0:1',                                                            
-        \ 'v:variable:0:1',                                                            
-        \ 'c:const:0:1',                                                              
-      \ ],                                                                            
-      \ 'sort' : 0                                                                    
-    \ }             
+    let g:tagbar_type_typescript = {
+      \ 'ctagsbin' : 'tstags',
+      \ 'ctagsargs' : '-f-',
+      \ 'kinds': [
+        \ 'e:enums:0:1',
+        \ 'f:function:0:1',
+        \ 't:typealias:0:1',
+        \ 'M:Module:0:1',
+        \ 'I:import:0:1',
+        \ 'i:interface:0:1',
+        \ 'C:class:0:1',
+        \ 'm:method:0:1',
+        \ 'p:property:0:1',
+        \ 'v:variable:0:1',
+        \ 'c:const:0:1',
+      \ ],
+      \ 'sort' : 0
+    \ }
 
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -118,14 +123,16 @@ Plug 'ervandew/supertab'
 
 Plug 'scrooloose/nerdcommenter'
 
+Plug 'bronson/vim-trailing-whitespace'
+
 " On-demand loading
-Plug 'scrooloose/nerdtree' 
+Plug 'scrooloose/nerdtree'
     noremap <leader>nf :NERDTreeFind<CR>
     noremap <leader>nt :NERDTreeToggle<CR>
 
 " Syntastic
 Plug 'scrooloose/syntastic'
-    let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint']
+    let g:syntastic_typescript_checkers = ['tslint']
     let g:syntastic_always_populate_loc_list = 1
 
 
@@ -199,6 +206,8 @@ Plug 'valloric/matchtagalways'
         \ 'xml' : 1,
         \ 'jinja' : 1,
         \}
+
+Plug 'plasticboy/vim-markdown'
 
 " Initialize plugin system
 call plug#end()
