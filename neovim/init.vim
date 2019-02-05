@@ -38,12 +38,17 @@ nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-c> :tabclose<CR>
 
-colorscheme PaperColor
 "
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+
+" Colorscheme
+Plug 'morhetz/gruvbox'
+    set background=dark
+    let g:gruvbox_contrast_dark='hard'
+    " Set after pugins are initalized
 
 " Try to run vim-test tests on tmux
 Plug 'benmills/vimux'
@@ -61,6 +66,8 @@ Plug 'mileszs/ack.vim'
 Plug 'junegunn/goyo.vim'
     let g:goyo_width = 120
     noremap <leader>rd :Goyo<CR>
+" Highligh focused area
+Plug 'junegunn/limelight.vim'
 
 Plug 'junegunn/vim-easy-align'
 
@@ -73,7 +80,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
     noremap <leader>l :CtrlP<CR>
     noremap <leader>b :CtrlPBuffer<CR>
-    noremap <leader>f :CtrlPCurFile<CR>
+    noremap <leader>x :CtrlPCurFile<CR>
     let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|bin\|lib\'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -208,6 +215,14 @@ Plug 'valloric/matchtagalways'
         \}
 
 Plug 'plasticboy/vim-markdown'
+    augroup markdown
+        " Set readability width and wrap for markdown
+        autocmd FileType markdown let g:goyo_width = 60
+        autocmd FileType markdown :set wrap
+    augroup END
 
 " Initialize plugin system
 call plug#end()
+
+" Cannot be done before plugins are initialized
+colorscheme Gruvbox
