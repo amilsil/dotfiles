@@ -6,7 +6,7 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-set cursorline
+set nocursorline
 set expandtab
 set tabstop=4 shiftwidth=4
 set mouse=a "enable mouse on all modes
@@ -47,7 +47,6 @@ call plug#begin('~/.vim/plugged')
 " Colorscheme
 Plug 'morhetz/gruvbox'
     set background=dark
-    let g:gruvbox_contrast_dark='hard'
     " Set after pugins are initalized
 
 " Try to run vim-test tests on tmux
@@ -149,6 +148,10 @@ Plug 'tpope/vim-fugitive'
 
 " Git status in the Gutter
 Plug 'airblade/vim-gitgutter'
+    hi GitGutterAdd          ctermbg=235
+    hi GitGutterChange       ctermbg=235
+    hi GitGutterDelete       ctermbg=235
+    hi GitGutterChangeDelete ctermbg=235
 
 Plug 'prettier/vim-prettier', {
             \ 'do': 'npm install',
