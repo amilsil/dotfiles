@@ -1,6 +1,6 @@
 " Basics
 set encoding=utf-8
-set relativenumber
+set number
 set clipboard=unnamed
 set ignorecase
 set smartcase
@@ -72,6 +72,11 @@ Plug 'junegunn/vim-easy-align'
 
 Plug 'tpope/vim-surround'
 
+" Move selections with Alt-[hjkl]
+Plug 'matze/vim-move'
+    vmap <S-k> <Plug>MoveBlockUp
+    vmap <S-j> <Plug>MoveBlockDown
+
 Plug 'vim-airline/vim-airline-themes'
     let g:airline_solarized_bg='luna'
 Plug 'vim-airline/vim-airline'
@@ -139,8 +144,6 @@ Plug 'scrooloose/nerdtree'
 " Syntastic
 Plug 'scrooloose/syntastic'
     let g:syntastic_typescript_checkers = ['tslint']
-    let g:syntastic_always_populate_loc_list = 1
-
 
 " Git Fugitive
 Plug 'tpope/vim-fugitive'
@@ -197,11 +200,12 @@ Plug 'peitalin/vim-jsx-typescript'
     autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
     augroup typescript
+      let g:nvim_typescript#diagnostics_enable=0
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>e :TSRename<CR>
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>i :TSImport<CR>
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fd :TSDef<CR>
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fc :TSDoc<CR>
-      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>d :TSType<CR>
+      autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>ft :TSType<CR>
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fu :TSRefs<CR>
       autocmd FileType typescript,typescript.tsx nmap <buffer> <Leader>fs :TSGetDocSymbols<CR>
     augroup END
