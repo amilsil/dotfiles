@@ -12,6 +12,13 @@ set tabstop=4 shiftwidth=4
 set mouse=a "enable mouse on all modes
 set nowrap
 
+" ESCape easily with
+inoremap jk <ESC>
+
+" Use j,k for navigating up/down wrapped text
+nnoremap j gj
+nnoremap k gk
+
 " Remove vertical splitbar
 :set fillchars+=vert:\ 
 
@@ -77,9 +84,15 @@ Plug 'matze/vim-move'
     vmap <S-k> <Plug>MoveBlockUp
     vmap <S-j> <Plug>MoveBlockDown
 
-Plug 'vim-airline/vim-airline-themes'
-    let g:airline_solarized_bg='luna'
-Plug 'vim-airline/vim-airline'
+Plug 'itchyny/lightline.vim'
+    let g:lightline = {
+          \ 'active': {
+          \   'left': [ [], [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+          \ },
+          \ 'component_function': {
+          \   'gitbranch': 'fugitive#head'
+          \ },
+      \ }
 
 Plug 'ctrlpvim/ctrlp.vim'
     noremap <leader>l :CtrlP<CR>
