@@ -13,13 +13,15 @@ set mouse=a "enable mouse on all modes
 set nowrap
 
 " ESCape easily with
-inoremap jk <ESC>
+inoremap kj <ESC>
+inoremap <ESC> <Nop>
 
 " Use j,k for navigating up/down wrapped text
 nnoremap j gj
 nnoremap k gk
 
 " Remove vertical splitbar
+" \SPACE
 :set fillchars+=vert:\ 
 
 " Set the Leader
@@ -63,8 +65,10 @@ call plug#begin('~/.vim/plugged')
 
 " Colorscheme
 Plug 'morhetz/gruvbox'
+    " Colorscheme is set after pugins are initalized
     set background=dark
-    " Set after pugins are initalized
+    let g:gruvbox_invert_signs=0
+    let g:gitgutter_override_sign_column_highlight=1
 
 " Try to run vim-test tests on tmux
 Plug 'benmills/vimux'
@@ -75,7 +79,7 @@ Plug 'benmills/vimux'
     map <Leader>vz :VimuxZoomRunner<CR>
     map <Leader>rr :call VimuxRunCommand(GetVisualSelection())<CR>
 
-
+" Use vim mappings for navigating between vim and tmux
 Plug 'christoomey/vim-tmux-navigator'
 
 " Search within files
@@ -85,6 +89,7 @@ Plug 'mileszs/ack.vim'
 Plug 'junegunn/goyo.vim'
     let g:goyo_width = 120
     noremap <leader>rd :Goyo<CR>
+
 " Highligh focused area
 Plug 'junegunn/limelight.vim'
 
@@ -161,6 +166,9 @@ Plug 'ervandew/supertab'
 Plug 'scrooloose/nerdcommenter'
 
 Plug 'bronson/vim-trailing-whitespace'
+
+" Create braces automatically
+Plug 'jiangmiao/auto-pairs'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree'
@@ -261,3 +269,4 @@ call plug#end()
 colorscheme Gruvbox
 " Set background to terminal background color
 highlight Normal ctermbg=NONE
+highlight VertSplit ctermbg=NONE
