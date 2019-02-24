@@ -1,16 +1,15 @@
 " Basics
 set encoding=utf-8
-set number
 set clipboard=unnamed
 set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-set nocursorline
 set expandtab
 set tabstop=4 shiftwidth=4
 set mouse=a "enable mouse on all modes
 set nowrap
+set cursorline
 
 " ESCape easily with
 inoremap kj <ESC>
@@ -22,7 +21,7 @@ nnoremap k gk
 
 " Remove vertical splitbar
 " \SPACE
-:set fillchars+=vert:\ 
+:set fillchars+=vert:\|
 
 " Set the Leader
 let mapleader = ","
@@ -167,6 +166,9 @@ Plug 'scrooloose/nerdcommenter'
 
 Plug 'bronson/vim-trailing-whitespace'
 
+" Load settings from .editorconfig
+Plug 'editorconfig/editorconfig-vim'
+
 " Create braces automatically
 Plug 'jiangmiao/auto-pairs'
 
@@ -270,3 +272,4 @@ colorscheme Gruvbox
 " Set background to terminal background color
 highlight Normal ctermbg=NONE
 highlight VertSplit ctermbg=NONE
+highlight CursorLine ctermbg=0
