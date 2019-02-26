@@ -10,6 +10,7 @@ set tabstop=4 shiftwidth=4
 set mouse=a "enable mouse on all modes
 set nowrap
 set cursorline
+set scrolloff=5
 
 " ESCape easily with
 inoremap kj <ESC>
@@ -165,6 +166,7 @@ Plug 'ervandew/supertab'
 Plug 'scrooloose/nerdcommenter'
 
 Plug 'bronson/vim-trailing-whitespace'
+    noremap <leader>wl :FixWhitespace<CR>
 
 " Load settings from .editorconfig
 Plug 'editorconfig/editorconfig-vim'
