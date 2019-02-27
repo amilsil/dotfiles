@@ -120,9 +120,15 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
+" Highlight when yanked
+Plug 'machakann/vim-highlightedyank'
+
 " Remember multiple yanks
 Plug 'vim-scripts/YankRing.vim'
     nnoremap <silent> <leader>ys :YRShow<CR>
+
+" Repeat plugin commands
+Plug 'tpope/vim-repeat'
 
 " Tag navigation support
 Plug 'majutsushi/tagbar'
