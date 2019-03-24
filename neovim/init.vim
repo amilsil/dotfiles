@@ -11,9 +11,11 @@ set mouse=a "enable mouse on all modes
 set nowrap
 set cursorline
 set scrolloff=5
+set autoread<
 
 " ESCape easily with
 inoremap kj <ESC>
+inoremap KJ <ESC>
 inoremap <ESC> <Nop>
 
 " Use j,k for navigating up/down wrapped text
@@ -39,13 +41,12 @@ set noswapfile     "no swap files
 nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-j> :wincmd j<CR>
 nmap <silent> <C-h> :wincmd h<CR>
-nmap <silent> <C-l> :wincmd l<CR>
-
+nmap <silent> <C-l> :wincmd l<CR> 
 " Tabs
-nnoremap <C-tab>   :tabnext<CR>
-nnoremap <C-S-tab> :tabprevious<CR>
-nnoremap <C-t> :tabnew<CR>
-nnoremap <C-c> :tabclose<CR>
+nnoremap <A-S-right>  :tabnext<CR>
+nnoremap <A-S-left> :tabprevious<CR>
+nnoremap <A-S-up> :tabnew<CR>
+nnoremap <A-S-down> :tabclose<CR>
 
 function! GetVisualSelection()
   try
@@ -204,7 +205,12 @@ Plug 'prettier/vim-prettier', {
             \ 'do': 'npm install',
             \ 'for': ['javascript', 'typescript', 'typescript.tsx', 'css', 'less', 'scss'] }
 
+" =======================================================================
+" LANGUAGES
+" =======================================================================
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+
+" GOLANG
 Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'buoto/gotests-vim'
     let g:gotests_bin = '/Users/amil/go/bin/gotests'
@@ -221,20 +227,21 @@ Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
         let l:file = expand('%')
         if l:file =~# '^\f\+_test\.go$'
           call go#test#Test(0, 1)
-        elseif l:file =~# '^\f\+\.go$'
-          call go#cmd#Build(0)
+        elseif l:file =~# '^\f\+\.go$' call go#cmd#Build(0)
         endif
       endfunction
 
-      autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-      autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-      autocmd FileType go nmap <Leader>r <Plug>(go-run)
+      autocmd FileType go nmap <leader>gb :<C-u>call <SID>build_go_files()<CR>
+      autocmd FileType go nmap <Leader>gc <Plug>(go-coverage-toggle)
+      autocmd FileType go nmap <Leader>gr <Plug>(go-run)
+      autocmd FileType go nmap <Leader>gt <Plug>(go-test)
       " switch between impls and test
       autocmd Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
       autocmd Filetype go nmap <leader>gah <Plug>(go-alternate-split)
       autocmd Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
     augroup END
 
+" JAVASCRIPT, TYPESCRIP, THTML, JSX
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
@@ -265,6 +272,7 @@ Plug 'valloric/matchtagalways'
         \ 'jinja' : 1,
         \}
 
+" MARKDOWN
 Plug 'plasticboy/vim-markdown'
     augroup markdown
         " Set readability width and wrap for markdown
@@ -272,6 +280,91 @@ Plug 'plasticboy/vim-markdown'
         autocmd FileType markdown :set wrap
     augroup END
 
+" CSHARP
+Plug 'OmniSharp/omnisharp-vim'
+    let g:OmniSharp_server_path = '/Users/amil/omnisharp.http-osx'
+    let g:Omnisharp_start_server = 1
+    "let g:Omnisharp_port = 2000
+    let g:OmniSharp_timeout = 5
+    let g:OmniSharp_use_random_port = 1
+    " User ctrl+p for completion
+    let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
+    set completeopt=longest,menuone,preview
+
+    " OmniSharp won't work without this setting
+    filetype plugin on
+
+    " Fetch full documentation during omnicomplete requests.
+    " There is a performance penalty with this (especially on Mono).
+    " By default, only Type/Method signatures are fetched. Full documentation can
+    " still be fetched when you need it with the :OmniSharpDocumentation command.
+    "let g:omnicomplete_fetch_full_documentation = 1
+
+    " Set desired preview window height for viewing documentation.
+    " You might also want to look at the echodoc plugin.
+    set previewheight=5
+
+    " Tell ALE to use OmniSharp for linting C# files, and no other linters.
+    let g:ale_linters = { 'cs': ['OmniSharp'] }
+
+    " Fetch semantic type/interface/identifier names on BufEnter and highlight them
+    let g:OmniSharp_highlight_types = 1
+
+    augroup omnisharp_commands
+        autocmd!
+
+        " When Syntastic is available but not ALE, automatic syntax check on events
+        " (TextChanged requires Vim 7.4)
+        " autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+
+        " Show type information automatically when the cursor stops moving
+        autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+
+        " Update the highlighting whenever leaving insert mode
+        autocmd InsertLeave *.cs call OmniSharp#HighlightBuffer()
+
+        " Alternatively, use a mapping to refresh highlighting for the current buffer
+        autocmd FileType cs nnoremap <buffer> <Leader>th :OmniSharpHighlightTypes<CR>
+
+        " The following commands are contextual, based on the cursor position.
+        autocmd FileType cs nnoremap <buffer> gd :OmniSharpGotoDefinition<CR>
+        autocmd FileType cs nnoremap <buffer> <Leader>fi :OmniSharpFindImplementations<CR>
+        autocmd FileType cs nnoremap <buffer> <Leader>fs :OmniSharpFindSymbol<CR>
+        autocmd FileType cs nnoremap <buffer> <Leader>fu :OmniSharpFindUsages<CR>
+
+        " Finds members in the current buffer
+        autocmd FileType cs nnoremap <buffer> <Leader>fm :OmniSharpFindMembers<CR>
+
+        autocmd FileType cs nnoremap <buffer> <Leader>fx :OmniSharpFixUsings<CR>
+        autocmd FileType cs nnoremap <buffer> <Leader>tt :OmniSharpTypeLookup<CR>
+        autocmd FileType cs nnoremap <buffer> <Leader>dc :OmniSharpDocumentation<CR>
+        autocmd FileType cs nnoremap <buffer> <C-\> :OmniSharpSignatureHelp<CR>
+        autocmd FileType cs inoremap <buffer> <C-\> <C-o>:OmniSharpSignatureHelp<CR>
+
+        " Navigate up and down by method/property/field
+        autocmd FileType cs nnoremap <buffer> <C-k> :OmniSharpNavigateUp<CR>
+        autocmd FileType cs nnoremap <buffer> <C-j> :OmniSharpNavigateDown<CR>
+    augroup END
+
+    " Contextual code actions (uses fzf, CtrlP or unite.vim when available)
+    nnoremap <Leader><Space> :OmniSharpGetCodeActions<CR>
+    " Run code actions with text selected in visual mode to extract method
+    xnoremap <Leader><Space> :call OmniSharp#GetCodeActions('visual')<CR>
+
+    " Rename with dialog
+    nnoremap <Leader>nm :OmniSharpRename<CR>
+    nnoremap <F2> :OmniSharpRename<CR>
+    " Rename without dialog - with cursor on the symbol to rename: `:Rename newname`
+    command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
+
+    nnoremap <Leader>cf :OmniSharpCodeFormat<CR>
+
+    " Start the omnisharp server for the current solution
+    nnoremap <Leader>ss :OmniSharpStartServer<CR>
+    nnoremap <Leader>sp :OmniSharpStopServer<CR>
+
+" Enable snippet completion
+" let g:OmniSharp_want_snippet=1
 " Initialize plugin system
 call plug#end()
 
@@ -281,3 +374,17 @@ colorscheme Gruvbox
 highlight Normal ctermbg=NONE
 highlight VertSplit ctermbg=NONE
 highlight CursorLine ctermbg=0
+
+" Spotify
+augroup spotify
+    nmap <silent> <Leader>spx :!spotify pause<CR>
+    nmap <silent> <Leader>spp :!spotify play<CR>
+    nmap <silent> <Leader>spi :!spotify info<CR>
+    nmap <silent> <Leader>spn :!spotify next<CR>
+    nmap <silent> <Leader>spb :!spotify back<CR>
+    nmap <silent> <Leader>spv :!spotify volume<CR>
+    nmap <silent> <Leader>spm :!spotify mute<CR>
+augroup END
+
+" Custom scripts
+source ~/.config/nvim/scripts.vim
