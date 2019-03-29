@@ -3,15 +3,20 @@ set encoding=utf-8
 set clipboard=unnamed
 set ignorecase
 set smartcase
-set incsearch
 set hlsearch
 set expandtab
 set tabstop=4 shiftwidth=4
 set mouse=a "enable mouse on all modes
 set nowrap
 set cursorline
-set scrolloff=5
+set scrolloff=50
 set autoread<
+set incsearch "incremental search"
+set inccommand=split "incremental commands, ex: substitute"
+
+" set g=on for %s/find/replace/g,
+" replaces all occurrances of the current line
+set gdefault
 
 " ESCape easily with
 inoremap kj <ESC>
@@ -41,7 +46,7 @@ set noswapfile     "no swap files
 nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-j> :wincmd j<CR>
 nmap <silent> <C-h> :wincmd h<CR>
-nmap <silent> <C-l> :wincmd l<CR> 
+nmap <silent> <C-l> :wincmd l<CR>
 " Tabs
 nnoremap <A-S-right>  :tabnext<CR>
 nnoremap <A-S-left> :tabprevious<CR>
@@ -190,9 +195,14 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
     let g:syntastic_typescript_checkers = ['tslint']
 
+" Mappings for navigating the quick fixes/errors
+Plug 'tpope/vim-unimpaired'
+
 " Git Fugitive
 Plug 'tpope/vim-fugitive'
     :nnoremap <leader>gs :Gstatus<CR>
+    " bind K to grep word under cursor
+    nnoremap <leader>s :Ggrep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Git status in the Gutter
 Plug 'airblade/vim-gitgutter'
@@ -275,8 +285,7 @@ Plug 'valloric/matchtagalways'
 " MARKDOWN
 Plug 'plasticboy/vim-markdown'
     augroup markdown
-        " Set readability width and wrap for markdown
-        autocmd FileType markdown let g:goyo_width = 60
+        " Set readability width and wrap for markdown autocmd FileType markdown let g:goyo_width = 60
         autocmd FileType markdown :set wrap
     augroup END
 
@@ -374,6 +383,14 @@ colorscheme Gruvbox
 highlight Normal ctermbg=NONE
 highlight VertSplit ctermbg=NONE
 highlight CursorLine ctermbg=0
+" Italics for comments
+highlight Comment cterm=italic
+
+" jsx-typescript
+" has to be set after the plugins are initialised
+highlight tsxAttrib ctermfg=122 cterm=italic
+highlight tsxCloseTag ctermfg=204
+highlight tsxCloseString ctermfg=137
 
 " Spotify
 augroup spotify
