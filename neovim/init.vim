@@ -291,13 +291,18 @@ Plug 'plasticboy/vim-markdown'
 
 " CSHARP
 Plug 'OmniSharp/omnisharp-vim'
-    let g:OmniSharp_server_path = '/Users/amil/omnisharp.http-osx'
-    let g:Omnisharp_start_server = 1
-    "let g:Omnisharp_port = 2000
-    let g:OmniSharp_timeout = 5
-    let g:OmniSharp_use_random_port = 1
+    " Download omnisharp-http-osx
+    " Extract to a folder
+    " Configure the following to the `run` file
+    let g:OmniSharp_server_path = '/Users/amil/om/run'
+    let g:OmniSharp_server_type = 'roslyn'
+    let g:OmniSharp_prefer_global_sln = 1
+    let g:OmniSharp_timeout = 10
     " User ctrl+p for completion
     let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
+    "let g:Omnisharp_start_server = 1
+    "let g:OmniSharp_use_random_port = 1
+    "let g:Omnisharp_port = 2000
     set completeopt=longest,menuone,preview
 
     " OmniSharp won't work without this setting
@@ -318,13 +323,14 @@ Plug 'OmniSharp/omnisharp-vim'
 
     " Fetch semantic type/interface/identifier names on BufEnter and highlight them
     let g:OmniSharp_highlight_types = 1
+    let g:syntastic_cs_checkers = ['code_checker']
 
     augroup omnisharp_commands
         autocmd!
 
         " When Syntastic is available but not ALE, automatic syntax check on events
         " (TextChanged requires Vim 7.4)
-        " autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+         autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
 
         " Show type information automatically when the cursor stops moving
         autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
@@ -359,21 +365,19 @@ Plug 'OmniSharp/omnisharp-vim'
     nnoremap <Leader><Space> :OmniSharpGetCodeActions<CR>
     " Run code actions with text selected in visual mode to extract method
     xnoremap <Leader><Space> :call OmniSharp#GetCodeActions('visual')<CR>
-
     " Rename with dialog
     nnoremap <Leader>nm :OmniSharpRename<CR>
     nnoremap <F2> :OmniSharpRename<CR>
     " Rename without dialog - with cursor on the symbol to rename: `:Rename newname`
     command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
-
     nnoremap <Leader>cf :OmniSharpCodeFormat<CR>
-
     " Start the omnisharp server for the current solution
     nnoremap <Leader>ss :OmniSharpStartServer<CR>
     nnoremap <Leader>sp :OmniSharpStopServer<CR>
 
-" Enable snippet completion
-" let g:OmniSharp_want_snippet=1
+    " Enable snippet completion
+     let g:OmniSharp_want_snippet=1
+
 " Initialize plugin system
 call plug#end()
 
