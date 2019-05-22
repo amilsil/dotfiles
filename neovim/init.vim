@@ -322,7 +322,6 @@ Plug 'OmniSharp/omnisharp-vim'
     let g:ale_linters = { 'cs': ['OmniSharp'] }
 
     " Fetch semantic type/interface/identifier names on BufEnter and highlight them
-    let g:OmniSharp_highlight_types = 1
     let g:syntastic_cs_checkers = ['code_checker']
 
     augroup omnisharp_commands
