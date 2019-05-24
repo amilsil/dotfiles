@@ -291,11 +291,17 @@ Plug 'plasticboy/vim-markdown'
 
 " CSHARP
 Plug 'OmniSharp/omnisharp-vim'
-    " Download omnisharp-http-osx
+    " Option1: Download omnisharp-http-osx
     " Extract to a folder
     " Configure the following to the `run` file
-    let g:OmniSharp_server_path = '/Users/amil/om/run'
-    let g:OmniSharp_server_type = 'roslyn'
+    "let g:OmniSharp_server_path = '/Users/amil/om/run'
+    "let g:OmniSharp_server_type = 'roslyn'
+
+    " BestOption: Use the new stdio, asynchronous, faster
+    " Remove ~.omnisharp if exists
+    " Run OmnisharpInstall
+    let g:Omnisharp_server_stdio = 1
+
     let g:OmniSharp_prefer_global_sln = 1
     let g:OmniSharp_timeout = 10
     " User ctrl+p for completion
