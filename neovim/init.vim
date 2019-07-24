@@ -9,7 +9,7 @@ set tabstop=4 shiftwidth=4
 set mouse=a "enable mouse on all modes
 set nowrap
 set cursorline
-set scrolloff=50
+set scrolloff=10
 set autoread<
 set incsearch "incremental search"
 set inccommand=split "incremental commands, ex: substitute"
@@ -190,6 +190,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
     noremap <leader>nf :NERDTreeFind<CR>
     noremap <leader>nt :NERDTreeToggle<CR>
+    :let g:NERDTreeWinSize=30
 
 " Syntastic
 Plug 'scrooloose/syntastic'
@@ -251,9 +252,12 @@ Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
       autocmd Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
     augroup END
 
-" JAVASCRIPT, TYPESCRIP, THTML, JSX
+" JAVASCRIPT, TYPESCRIP, HTML, JSX
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+
+" HTML
+Plug 'mattn/emmet-vim'
 
 " typescript syntax and formatting
 Plug 'leafgarland/typescript-vim'
@@ -362,8 +366,8 @@ Plug 'OmniSharp/omnisharp-vim'
         autocmd FileType cs inoremap <buffer> <C-\> <C-o>:OmniSharpSignatureHelp<CR>
 
         " Navigate up and down by method/property/field
-        autocmd FileType cs nnoremap <buffer> <C-k> :OmniSharpNavigateUp<CR>
-        autocmd FileType cs nnoremap <buffer> <C-j> :OmniSharpNavigateDown<CR>
+        autocmd FileType cs nnoremap <buffer> ( :OmniSharpNavigateUp<CR>
+        autocmd FileType cs nnoremap <buffer> ) :OmniSharpNavigateDown<CR>
     augroup END
 
     " Contextual code actions (uses fzf, CtrlP or unite.vim when available)
@@ -382,6 +386,9 @@ Plug 'OmniSharp/omnisharp-vim'
 
     " Enable snippet completion
      let g:OmniSharp_want_snippet=1
+
+" POWERSHELL
+Plug 'pprovost/vim-ps1'
 
 " Initialize plugin system
 call plug#end()
