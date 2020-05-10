@@ -6,11 +6,11 @@ Plug 'tpope/vim-fugitive'
 
 " Git status in the Gutter
 Plug 'airblade/vim-gitgutter'
+augroup GitGutter
     hi GitGutterAdd          ctermbg=NONE
     hi GitGutterChange       ctermbg=NONE
     hi GitGutterDelete       ctermbg=NONE
-    hi GitGutterChangeDelete ctermbg=NONE
 
-augroup GitGutter
-    highlight clear SignColumn
+    hi GitGutterChangeDelete ctermbg=NONE
+    hi SignColumn            ctermbg=NONE
 augroup END

@@ -16,6 +16,10 @@ set inccommand=split "incremental commands, ex: substitute"
 " set g=on for %s/find/replace/g,
 " replaces all occurrances of the current line
 set gdefault
+" No swap files needed
+set nobackup       "no backup files
+set nowritebackup  "only in case you don't want a backup file while editing
+set noswapfile     "no swap files
 
 " ESCape easily with
 inoremap kj <ESC>
@@ -32,8 +36,6 @@ let mapleader = ","
 " Sourcing
 :nnoremap <leader>so :source ~/.config/nvim/init.vim<CR>
 
-" No swap files needed
-set nobackup       "no backup files
-set nowritebackup  "only in case you don't want a backup file while editing
-set noswapfile     "no swap files
-
+" Remove vertical splitbar
+" \SPACE
+:set fillchars+=vert:\|
