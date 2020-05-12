@@ -14,4 +14,4 @@ let g:mta_filetypes = {
 " Only works when these two values are set to 0.
 let g:mta_use_matchparen_group=0
 let g:mta_set_default_matchtag_color = 0
-highlight MatchTag ctermfg=0 ctermbg=238
+highlight MatchTag ctermfg=0 ctermbg=244
