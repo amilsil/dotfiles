@@ -30,6 +30,11 @@ inoremap <ESC> <Nop>
 nnoremap j gj
 nnoremap k gk
 
+" Save
+nnoremap <C-s> :write<CR>
+inoremap <C-s> <ESC>:write<CR>
+
+
 " Set the Leader
 let mapleader = ","
 
