@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Install requirements
+test
 brew install cmake
 brew install node
 brew install python@2
