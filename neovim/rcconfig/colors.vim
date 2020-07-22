@@ -11,3 +11,6 @@ highlight Comment cterm=italic
 " Cursor Line
 highlight CursorLine cterm=NONE
 
+" Popup menu colours
+highlight Pmenu ctermbg=245 gui=bold
+
