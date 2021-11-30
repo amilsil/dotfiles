@@ -1,6 +1,6 @@
 " Git Fugitive
 Plug 'tpope/vim-fugitive'
-    :nnoremap <leader>gs :Gstatus<CR>
+    :nnoremap <leader>gs :Git<CR>
     " bind K to grep word under cursor
     nnoremap <leader>s :Ggrep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 

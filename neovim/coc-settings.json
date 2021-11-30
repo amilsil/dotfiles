@@ -1,0 +1,5 @@
+{
+    "java.format.settings.profile": "GoogleStyle",
+    "java.referencesCodeLens.enabled": true,
+    "java.implementationsCodeLens.enabled": true
+}

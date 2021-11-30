@@ -1,6 +1,7 @@
 " Basics
 set encoding=utf-8
 set clipboard=unnamed
+set clipboard=unnamedplus
 set ignorecase
 set smartcase
 set hlsearch
@@ -20,6 +21,11 @@ set gdefault
 set nobackup       "no backup files
 set nowritebackup  "only in case you don't want a backup file while editing
 set noswapfile     "no swap files
+
+" line number and styling
+set number
+highlight LineNr ctermfg=darkgrey
+highlight CursorLineNr ctermfg=grey
 
 " ESCape easily with
 inoremap kj <ESC>
