@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Link to the dotfiles
+ln -s ~/dotfiles/neovim ~/.config/nvim
+ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+
 # Install requirements
-test
 brew install cmake
 brew install node
 brew install python@2
