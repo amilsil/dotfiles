@@ -28,3 +28,27 @@ vim.api.nvim_set_keymap(
   ":call VimuxRunCommand(get_visual_selection())<CR>",
   { noremap = true, silent = true }
 )
+
+-- These were old commands, following the lua conversion
+-- autocmd FileType ruby nnoremap <buffer> <Leader>rc :call VimuxRunCommand('rubocop -A ' . expand('%:r') . '.' . expand('%:e'))<CR>
+-- autocmd FileType ruby nnoremap <buffer> <Leader>rt :call VimuxRunCommand('testrbl ' . expand('%:r'))<CR>
+-- autocmd FileType ruby nnoremap <buffer> <Leader>rl :call VimuxRunCommand('testrbl ' . expand('%:r') . '.' . expand('%:e') . ':' . line("."))<CR>
+-- autocmd FileType scala nnoremap <buffer> <Leader>rt :call VimuxRunCommand('sbt "testOnly *' . expand('%:t:r') . '"')<CR>
+-- autocmd FileType scala vnoremap <buffer> <Leader>rl :call VimuxRunCommand('sbt "testOnly *' . expand('%:t:r') . ' -- -z ' . GetVisualSelection() . '"')<CR>
+
+-- in lua
+vim.api.nvim_command(
+  "autocmd FileType ruby nnoremap <buffer> <Leader>rc :call VimuxRunCommand('rubocop -A ' . expand('%:r') . '.' . expand('%:e'))<CR>"
+)
+vim.api.nvim_command(
+  "autocmd FileType ruby nnoremap <buffer> <Leader>rt :call VimuxRunCommand('testrbl ' . expand('%:r'))<CR>"
+)
+vim.api.nvim_command(
+  "autocmd FileType ruby nnoremap <buffer> <Leader>rl :call VimuxRunCommand('testrbl ' . expand('%:r') . '.' . expand('%:e') . ':' . line('.'))<CR>"
+)
+vim.api.nvim_command(
+  "autocmd FileType scala nnoremap <buffer> <Leader>rt :call VimuxRunCommand('sbt \"testOnly *' . expand('%:t:r') . '\"')<CR>"
+)
+vim.api.nvim_command(
+  "autocmd FileType scala vnoremap <buffer> <Leader>rl :call VimuxRunCommand('sbt \"testOnly *' . expand('%:t:r') . ' -- -z ' . get_visual_selection() . '\"')<CR>"
+)

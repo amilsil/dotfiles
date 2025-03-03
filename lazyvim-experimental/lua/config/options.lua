@@ -7,3 +7,6 @@ vim.api.nvim_set_keymap("i", "kj", "<Esc>", { noremap = true, silent = true })
 
 -- set leader to comma
 vim.g.mapleader = ","
+
+-- don't use relative line numbers
+vim.wo.relativenumber = false

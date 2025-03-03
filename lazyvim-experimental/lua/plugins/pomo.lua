@@ -1,3 +1,4 @@
+-- Pomo is a pomodoro timer for Neovim. It is a simple and minimalistic timer that helps you stay focused and productive.
 return {
   "epwalsh/pomo.nvim",
   version = "*", -- Recommended, use latest release instead of latest commit
