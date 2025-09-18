@@ -11,6 +11,12 @@ return {
             },
           },
         },
+        solargraph = {
+          enabled = true,
+        },
+        ruby_ls = {
+          enabled = false,
+        },
       },
     },
   },
